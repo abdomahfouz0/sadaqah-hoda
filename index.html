@@ -125,6 +125,22 @@ button:hover{
     color: white;
 }
 
+.btn-share {
+    background: #25D366; /* لون مقارب للواتساب للمشاركة */
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    font-size: 22px;
+    padding: 15px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #randomDua{
     font-size:24px;
     line-height:2;
@@ -139,7 +155,7 @@ button:hover{
     transition: 0.3s;
 }
 
-#tasbeehCount{
+#tasbeehCount, #prayersCount {
     font-size:70px;
     color:#d4af37;
     margin:10px 20px 20px 20px;
@@ -150,6 +166,17 @@ audio {
     width: 100%;
     margin-top: 15px;
     border-radius: 10px;
+}
+
+.reminder-box {
+    background: #222;
+    border-right: 4px solid #d4af37;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: right;
+    line-height: 2;
+    font-size: 20px;
 }
 
 footer{
@@ -166,7 +193,8 @@ footer{
     .card h2{ font-size:24px; }
     #typing{ font-size:20px; }
     #counter{ font-size:22px; }
-    #tasbeehCount{ font-size:55px; }
+    #tasbeehCount, #prayersCount{ font-size:55px; }
+    .btn-share { font-size: 18px; }
 }
 </style>
 </head>
@@ -182,30 +210,44 @@ footer{
     <p>﴿ كل نفس ذائقة الموت ﴾</p>
 </header>
 
-<section class="card">
-    <h2>🤲 رسالة ودعاء</h2>
-    <div id="typing"></div>
-</section>
-
-<!-- القسم الجديد: فضل الدعاء -->
-<section class="card">
-    <h2>📜 حديث شريف</h2>
-    <p style="font-size: 22px; line-height: 2; color: #ddd;">
-        عن أبي هريرة رضي الله عنه أن رسول الله ﷺ قال:<br>
-        <b style="color: #d4af37; font-size: 26px;">"إذا مات ابن آدم انقطع عمله إلا من ثلاث: صدقة جارية، أو علم ينتفع به، أو ولد صالح يدعو له."</b>
-    </p>
-</section>
-
+<!-- الترتيب الجديد: 1. القرآن الكريم -->
 <section class="card">
     <h2>📖 القرآن الكريم</h2>
-    <p style="font-size: 20px; margin-bottom: 10px;">سورة يس - بصوت الشيخ مشاري العفاسي</p>
+    <p style="font-size: 20px; margin-bottom: 10px; color: #ddd;">سورة يس - بصوت الشيخ مشاري العفاسي</p>
     <audio controls>
         <source src="https://server8.mp3quran.net/afs/036.mp3" type="audio/mpeg">
         متصفحك لا يدعم مشغل الصوت.
     </audio>
 </section>
 
-<!-- القسم الجديد: آية الكرسي -->
+<!-- الترتيب الجديد: 2. الدعاء المكتوب -->
+<section class="card">
+    <h2>🤲 رسالة ودعاء</h2>
+    <div id="typing"></div>
+</section>
+
+<!-- الترتيب الجديد: 3. العداد -->
+<section class="card">
+    <h2>⏳ مر على وفاتها</h2>
+    <div id="counter">جاري الحساب...</div>
+</section>
+
+<!-- قسم الدعاء العشوائي -->
+<section class="card">
+    <h2>🤲 ادع لها</h2>
+    <p id="randomDua"></p>
+    <button onclick="newDua()">دعاء جديد</button>
+</section>
+
+<!-- القسم الجديد: أرسل لها نوراً -->
+<section class="card" style="position: relative; overflow: hidden;" id="prayerSection">
+    <h2>🕊️ أرسل لها دعوة</h2>
+    <p style="font-size: 20px; color: #ddd; margin-bottom: 15px;">كل ضغطة هي بمثابة دعوة تُرفع لها في السماء</p>
+    <div id="prayersCount">0</div>
+    <button onclick="sendPrayer()" style="background: white; color: black;">اللهم ارحمها 🤍</button>
+</section>
+
+<!-- قسم آية الكرسي -->
 <section class="card">
     <h2>📖 آية الكرسي</h2>
     <p style="font-size: 21px; line-height: 2.2; color: #eee; text-align: justify; direction: rtl;">
@@ -213,25 +255,35 @@ footer{
     </p>
 </section>
 
-<section class="card">
-    <h2>⏳ مر على وفاتها</h2>
-    <div id="counter">جاري الحساب...</div>
-</section>
-
-<section class="card">
-    <h2>🤲 ادع لها</h2>
-    <p id="randomDua"></p>
-    <button onclick="newDua()">دعاء جديد</button>
-    <button class="btn-secondary" onclick="sharePage()">شارك واكسب الأجر</button>
-</section>
-
-<section class="card" style="position: relative; overflow: hidden;">
+<!-- قسم السبحة -->
+<section class="card" style="position: relative; overflow: hidden;" id="tasbeehSection">
     <h2>📿 سبحة إلكترونية</h2>
-    <!-- الذكر المتغير -->
     <div id="dhikrText">سبحان الله</div>
     <div id="tasbeehCount">0</div>
     <button onclick="tasbeeh()">سبح</button>
     <button class="btn-secondary" onclick="resetTasbeeh()">إعادة</button>
+</section>
+
+<!-- القسم الأخير: الحديث الشريف والمشاركة وأوقات الإجابة -->
+<section class="card">
+    <h2>📜 فضل الصدقة والدعاء</h2>
+    <p style="font-size: 22px; line-height: 2; color: #ddd;">
+        عن أبي هريرة رضي الله عنه أن رسول الله ﷺ قال:<br>
+        <b style="color: #d4af37; font-size: 26px;">"إذا مات ابن آدم انقطع عمله إلا من ثلاث: صدقة جارية، أو علم ينتفع به، أو ولد صالح يدعو له."</b>
+    </p>
+
+    <div class="reminder-box">
+        <b style="color: #d4af37;">💡 تذكير:</b> أوقات يُستجاب فيها الدعاء:<br>
+        - في السجود.<br>
+        - بين الأذان والإقامة.<br>
+        - في الثلث الأخير من الليل.<br>
+        - في آخر ساعة من عصر يوم الجمعة.
+    </div>
+
+    <!-- زر المشاركة بالعبارة المؤثرة الجديدة -->
+    <button class="btn-share" onclick="sharePage()">
+        <span>✨ انشر الرابط لعل دعوة غريب تنير قبرها ✨</span>
+    </button>
 </section>
 
 <footer>
@@ -239,7 +291,6 @@ footer{
     <br><br>
     <b>هدى عبدالله علي محفوظ</b>
     <br><br>
-    <!-- تم تعديل السنة إلى 2026 -->
     10 يناير 2026
 </footer>
 
@@ -260,7 +311,7 @@ function typeWriter(){
 typeWriter();
 
 //============================
-// العداد (تم التعديل إلى 10/1/2026)
+// العداد (10/1/2026)
 //============================
 const deathDate = new Date("2026-01-10T00:00:00");
 
@@ -268,10 +319,9 @@ function updateCounter(){
     const now = new Date();
     const diff = now - deathDate;
     
-    // إذا كان التاريخ لم يأتِ بعد (في المستقبل) نعرض 0
     if (diff < 0) {
         document.getElementById("counter").innerHTML = `
-            <div style="font-size:24px;color:#d4af37;">لم يحن التاريخ بعد</div>
+            <div style="font-size:24px;color:#d4af37;">اللهم ارحمها واغفر لها</div>
         `;
         return;
     }
@@ -327,16 +377,50 @@ function sharePage() {
     if (navigator.share) {
         navigator.share({
             title: 'صدقة جارية | هدى عبدالله علي محفوظ',
-            text: 'أرجو منك الدعاء للمرحومة هدى عبدالله علي محفوظ، وشارك الرابط ليكون صدقة جارية.',
+            text: 'أرجو منك الدعاء للمرحومة هدى عبدالله علي محفوظ.. انشر الرابط لعل دعوة غريب تنير قبرها.',
             url: window.location.href
         }).catch(console.error);
     } else {
-        alert("عذراً، متصفحك لا يدعم ميزة المشاركة المباشرة. يمكنك نسخ الرابط من الأعلى.");
+        alert("عذراً، متصفحك لا يدعم ميزة المشاركة المباشرة. يمكنك نسخ الرابط من الأعلى ومشاركته.");
     }
 }
 
 //====================================
-// السبحة الإلكترونية مع تغيير الذكر
+// عداد الدعوات (الجديد)
+//====================================
+let prayers = localStorage.getItem("prayersCount") || 0;
+document.getElementById("prayersCount").innerHTML = prayers;
+
+function sendPrayer(){
+    prayers++;
+    document.getElementById("prayersCount").innerHTML = prayers;
+    localStorage.setItem("prayersCount", prayers);
+    
+    // تأثير الحمامة البيضاء
+    let dove = document.createElement("div");
+    dove.innerHTML = "🕊️";
+    dove.style.position = "absolute";
+    dove.style.left = (40 + Math.random() * 20) + "%";
+    dove.style.bottom = "20px";
+    dove.style.fontSize = "35px";
+    dove.style.pointerEvents = "none";
+    dove.style.transition = "opacity 1.5s ease-out, transform 1.5s ease-out";
+    dove.style.zIndex = "10";
+    
+    document.getElementById("prayerSection").appendChild(dove);
+    
+    setTimeout(() => {
+        dove.style.opacity = "0";
+        dove.style.transform = `translateY(-150px) scale(1.5)`;
+    }, 50);
+
+    setTimeout(() => {
+        dove.remove();
+    }, 1500);
+}
+
+//====================================
+// السبحة الإلكترونية وتأثير حبات السبحة
 //====================================
 let count = localStorage.getItem("tasbeehCount") || 0;
 document.getElementById("tasbeehCount").innerHTML = count;
@@ -349,7 +433,6 @@ const dhikrWords = [
     "لا حول ولا قوة إلا بالله"
 ];
 
-// لضبط الكلمة الصحيحة عند فتح الصفحة
 document.getElementById("dhikrText").innerHTML = dhikrWords[count % dhikrWords.length];
 
 function tasbeeh(){
@@ -357,7 +440,6 @@ function tasbeeh(){
     document.getElementById("tasbeehCount").innerHTML = count;
     localStorage.setItem("tasbeehCount", count);
     
-    // تغيير نص الذكر مع كل تسبيحة
     document.getElementById("dhikrText").innerHTML = dhikrWords[count % dhikrWords.length];
     
     beadsEffect();
@@ -370,36 +452,27 @@ function resetTasbeeh(){
     localStorage.setItem("tasbeehCount", 0);
 }
 
-//====================================
-// تأثير السبحة المتصاعدة (بديل النجوم)
-//====================================
 function beadsEffect(){
-    for(let i=0; i<3; i++){ // إظهار 3 حبات سبحة في كل ضغطة
+    for(let i=0; i<2; i++){ 
         let bead = document.createElement("div");
         bead.innerHTML = "📿";
-        bead.style.position = "absolute"; // لتكون داخل بطاقة السبحة
+        bead.style.position = "absolute";
         
-        // خروج السبحة من مكان عشوائي قريب من الزر
         bead.style.left = (40 + Math.random() * 20) + "%";
         bead.style.bottom = "10px";
         bead.style.fontSize = (25 + Math.random() * 10) + "px";
         bead.style.pointerEvents = "none";
         
-        // حركة الصعود لأعلى مع التلاشي
         bead.style.transition = "opacity 1.2s ease-out, transform 1.2s ease-out";
         bead.style.zIndex = "10";
         
-        // نضيف العنصر داخل بطاقة السبحة نفسها وليس الجسم كله
-        document.getElementById("tasbeehCount").parentElement.appendChild(bead);
+        document.getElementById("tasbeehSection").appendChild(bead);
         
-        // تشغيل الحركة بعد لحظة من إنشاء العنصر
         setTimeout(() => {
             bead.style.opacity = "0";
-            // تصعد للأعلى مع ميلان بسيط
-            bead.style.transform = `translateY(-${100 + Math.random() * 80}px) rotate(${Math.random() * 45}deg)`;
+            bead.style.transform = `translateY(-${100 + Math.random() * 60}px) rotate(${Math.random() * 45}deg)`;
         }, 50);
 
-        // حذف العنصر بعد انتهاء الحركة حتى لا يثقل المتصفح
         setTimeout(() => {
             bead.remove();
         }, 1200);
