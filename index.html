@@ -1,1 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صدقة جارية | هدى عبدالله علي محفوظ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Cairo",sans-serif;
+}
+
+body{
+    background:#070707;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* النجوم */
+#stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background-image:
+    radial-gradient(white 1px,transparent 1px),
+    radial-gradient(gold 1px,transparent 1px);
+    background-size:80px 80px;
+    opacity:.20;
+    animation:stars 90s linear infinite;
+    z-index:-2;
+}
+
+@keyframes stars{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(-900px);
+    }
+}
+
+/* الهيدر */
+header{
+    padding:70px 20px;
+    text-align:center;
+    background:linear-gradient(#111,#000);
+    border-bottom:2px solid #d4af37;
+}
+
+header h1{
+    font-size:50px;
+    color:#d4af37;
+    margin-bottom:15px;
+}
+
+header h2{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+header h3{
+    font-size:38px;
+    color:white;
+    margin-bottom:20px;
+}
+
+header p{
+    font-size:23px;
+    color:#ddd;
+    line-height:2;
+}
+
+/* البطاقات */
+.card{
+    width:92%;
+    max-width:900px;
+    margin:40px auto;
+    background:#111;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(212,175,55,.2);
+    text-align: center; /* توسيط محتوى البطاقات */
+}
+
+.card h2{
+    color:#d4af37;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+#typing{
+    font-size:28px;
+    line-height:2;
+    min-height:130px;
+}
+
+#counter{
+    font-size:30px;
+    line-height:2;
+}
+
+button{
+    padding:15px 35px;
+    background:#d4af37;
+    color:black;
+    font-size:20px;
+    font-weight: bold;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    margin-top:20px;
+    margin-left: 10px;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: #444;
+    color: white;
+}
+
+#randomDua{
+    font-size:24px;
+    line-height:2;
+    margin-bottom:20px;
+}
+
+#tasbeehCount{
+    font-size:70px;
+    color:#d4af37;
+    margin:20px;
+}
+
+/* مشغل الصوت */
+audio {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+footer{
+    padding:50px;
+    text-align:center;
+    border-top:2px solid #d4af37;
+    margin-top:70px;
+    color:#bbb;
+}
+
+@media(max-width:700px){
+    header h1{
+        font-size:35px;
+    }
+    header h3{
+        font-size:28px;
+    }
+    .card h2{
+        font-size:24px;
+    }
+    #typing{
+        font-size:22px;
+    }
+    #counter{
+        font-size:22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<header>
+    <h1>🕌 صدقة جارية</h1>
+    <h2>عن روح المرحومة</h2>
+    <h3>هدى عبدالله علي محفوظ</h3>
+    <p>﴿ كل نفس ذائقة الموت ﴾</p>
+</header>
+
+<section class="card">
+    <h2>🤲 رسالة</h2>
+    <div id="typing"></div>
+</section>
+
+<!-- القسم الجديد: القرآن الكريم -->
+<section class="card">
+    <h2>📖 القرآن الكريم</h2>
+    <p style="font-size: 20px; margin-bottom: 10px;">سورة الفاتحة - بصوت الشيخ مشاري العفاسي</p>
+    <audio controls>
+        <source src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mpeg">
+        متصفحك لا يدعم مشغل الصوت.
+    </audio>
+</section>
+
+<section class="card">
+    <h2>⏳ مر على وفاتها</h2>
+    <div id="counter">جاري الحساب...</div>
+</section>
+
+<section class="card">
+    <h2>🤲 ادع لها</h2>
+    <p id="randomDua"></p>
+    <button onclick="newDua()">دعاء جديد</button>
+    <!-- زر المشاركة الجديد -->
+    <button class="btn-secondary" onclick="sharePage()">شارك واكسب الأجر</button>
+</section>
+
+<section class="card">
+    <h2>📿 سبحة إلكترونية</h2>
+    <div id="tasbeehCount">0</div>
+    <button onclick="tasbeeh()">سبح</button>
+    <button class="btn-secondary" onclick="resetTasbeeh()">إعادة</button>
+</section>
+
+<footer>
+    اللهم اجعل هذا الموقع صدقة جارية عن روح المرحومة
+    <br><br>
+    <b>هدى عبدالله علي محفوظ</b>
+    <br><br>
+    10 يناير 2025
+</footer>
+
+<script>
+//============================
+// رسالة البداية (كتابة حرفًا حرفًا)
+//============================
+const text = "اللهم اغفر للمرحومة هدى عبدالله علي محفوظ، وارحمها، وعافها واعف عنها، وأكرم نزلها، ووسع مدخلها، واغسلها بالماء والثلج والبرد، واجعل قبرها روضةً من رياض الجنة، واجمعها مع النبيين والصديقين والشهداء والصالحين.";
+let index = 0;
+
+function typeWriter(){
+    if(index < text.length){
+        document.getElementById("typing").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter,55);
+    }
+}
+typeWriter();
+
+//============================
+// العداد منذ 10 يناير 2025
+//============================
+const deathDate = new Date("2025-01-10T00:00:00");
+
+function updateCounter(){
+    const now = new Date();
+    const diff = now - deathDate;
+    const totalSeconds = Math.floor(diff/1000);
+    const years = Math.floor(totalSeconds/(60*60*24*365));
+    const months = Math.floor((totalSeconds%(60*60*24*365))/(60*60*24*30));
+    const days = Math.floor((totalSeconds%(60*60*24*30))/(60*60*24));
+    const hours = Math.floor((totalSeconds%(60*60*24))/(60*60));
+    const minutes = Math.floor((totalSeconds%(60*60))/60);
+    const seconds = totalSeconds%60;
+
+    document.getElementById("counter").innerHTML = `
+        <div style="font-size:40px;color:#d4af37;display:inline-block;margin:0 10px;">${years}</div> سنة
+        <hr style="border-color:#333;margin:15px 0;">
+        <div style="font-size:40px;color:#d4af37;display:inline-block;margin:0 10px;">${months}</div> شهر
+        <hr style="border-color:#333;margin:15px 0;">
+        <div style="font-size:40px;color:#d4af37;display:inline-block;margin:0 10px;">${days}</div> يوم
+        <hr style="border-color:#333;margin:15px 0;">
+        ${hours} ساعة | ${minutes} دقيقة | ${seconds} ثانية
+    `;
+}
+updateCounter();
+setInterval(updateCounter,1000);
+
+//============================
+// الأدعية
+//============================
+const duas=[
+    "اللهم اغفر لها وارحمها.",
+    "اللهم اجعل قبرها نورًا.",
+    "اللهم اجعلها من أهل الفردوس الأعلى.",
+    "اللهم آنس وحشتها.",
+    "اللهم وسع قبرها مد البصر.",
+    "اللهم اجعل القرآن شفيعًا لها.",
+    "اللهم ارزقها لذة النظر إلى وجهك الكريم.",
+    "اللهم اجعل أعمالها الصالحة نورًا لها.",
+    "اللهم اجعل كل من دعا لها شريكًا في الأجر.",
+    "اللهم اجمعنا بها في الفردوس الأعلى."
+];
+
+function newDua(){
+    const random = Math.floor(Math.random()*duas.length);
+    document.getElementById("randomDua").innerHTML = duas[random];
+}
+newDua();
+setInterval(newDua,10000);
+
+//====================================
+// ميزة مشاركة الصفحة
+//====================================
+function sharePage() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'صدقة جارية | هدى عبدالله علي محفوظ',
+            text: 'أرجو منك الدعاء للمرحومة هدى عبدالله علي محفوظ، وشارك الرابط ليكون صدقة جارية في ميزان حسناتها وحسناتك.',
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        alert("عذراً، متصفحك لا يدعم ميزة المشاركة المباشرة. يمكنك نسخ الرابط من الأعلى ومشاركته بنفسك.");
+    }
+}
+
+//====================================
+// السبحة الإلكترونية
+//====================================
+let count = localStorage.getItem("tasbeehCount") || 0;
+document.getElementById("tasbeehCount").innerHTML = count;
+
+function tasbeeh(){
+    count++;
+    document.getElementById("tasbeehCount").innerHTML = count;
+    localStorage.setItem("tasbeehCount",count);
+    sparkles();
+}
+
+function resetTasbeeh(){
+    count = 0;
+    document.getElementById("tasbeehCount").innerHTML = 0;
+    localStorage.setItem("tasbeehCount",0);
+}
+
+//====================================
+// تأثير نجوم ذهبية
+//====================================
+function sparkles(){
+    for(let i=0; i<15; i++){
+        let star = document.createElement("div");
+        star.innerHTML = "✨";
+        star.style.position = "fixed";
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.fontSize = (15 + Math.random() * 20) + "px";
+        star.style.pointerEvents = "none";
+        star.style.transition = "opacity 1s ease-out, transform 1s ease-out";
+        star.style.zIndex = "9999";
+        
+        document.body.appendChild(star);
+        
+        setTimeout(() => {
+            star.style.opacity = "0";
+            star.style.transform = "translateY(-50px)";
+        }, 50);
+
+        setTimeout(() => {
+            star.remove();
+        }, 1000);
+    }
+}
+</script>
+</body>
+  </html>
+  
