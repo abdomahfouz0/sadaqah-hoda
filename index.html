@@ -126,7 +126,7 @@ button:hover{
 }
 
 .btn-share {
-    background: #25D366; /* لون مقارب للواتساب للمشاركة */
+    background: #25D366; 
     color: white;
     width: 100%;
     max-width: 400px;
@@ -210,7 +210,6 @@ footer{
     <p>﴿ كل نفس ذائقة الموت ﴾</p>
 </header>
 
-<!-- الترتيب الجديد: 1. القرآن الكريم -->
 <section class="card">
     <h2>📖 القرآن الكريم</h2>
     <p style="font-size: 20px; margin-bottom: 10px; color: #ddd;">سورة يس - بصوت الشيخ مشاري العفاسي</p>
@@ -220,34 +219,29 @@ footer{
     </audio>
 </section>
 
-<!-- الترتيب الجديد: 2. الدعاء المكتوب -->
 <section class="card">
     <h2>🤲 رسالة ودعاء</h2>
     <div id="typing"></div>
 </section>
 
-<!-- الترتيب الجديد: 3. العداد -->
 <section class="card">
     <h2>⏳ مر على وفاتها</h2>
     <div id="counter">جاري الحساب...</div>
 </section>
 
-<!-- قسم الدعاء العشوائي -->
 <section class="card">
     <h2>🤲 ادع لها</h2>
     <p id="randomDua"></p>
     <button onclick="newDua()">دعاء جديد</button>
 </section>
 
-<!-- القسم الجديد: أرسل لها نوراً -->
 <section class="card" style="position: relative; overflow: hidden;" id="prayerSection">
     <h2>🕊️ أرسل لها دعوة</h2>
     <p style="font-size: 20px; color: #ddd; margin-bottom: 15px;">كل ضغطة هي بمثابة دعوة تُرفع لها في السماء</p>
     <div id="prayersCount">0</div>
-    <button onclick="sendPrayer()" style="background: white; color: black;">اللهم ارحمها 🤍</button>
+    <button id="prayerBtn" onclick="sendPrayer()" style="background: white; color: black; min-width: 250px;">اللهم ارحمها 🤍</button>
 </section>
 
-<!-- قسم آية الكرسي -->
 <section class="card">
     <h2>📖 آية الكرسي</h2>
     <p style="font-size: 21px; line-height: 2.2; color: #eee; text-align: justify; direction: rtl;">
@@ -255,7 +249,6 @@ footer{
     </p>
 </section>
 
-<!-- قسم السبحة -->
 <section class="card" style="position: relative; overflow: hidden;" id="tasbeehSection">
     <h2>📿 سبحة إلكترونية</h2>
     <div id="dhikrText">سبحان الله</div>
@@ -264,7 +257,6 @@ footer{
     <button class="btn-secondary" onclick="resetTasbeeh()">إعادة</button>
 </section>
 
-<!-- القسم الأخير: الحديث الشريف والمشاركة وأوقات الإجابة -->
 <section class="card">
     <h2>📜 فضل الصدقة والدعاء</h2>
     <p style="font-size: 22px; line-height: 2; color: #ddd;">
@@ -280,7 +272,6 @@ footer{
         - في آخر ساعة من عصر يوم الجمعة.
     </div>
 
-    <!-- زر المشاركة بالعبارة المؤثرة الجديدة -->
     <button class="btn-share" onclick="sharePage()">
         <span>✨ انشر الرابط لعل دعوة غريب تنير قبرها ✨</span>
     </button>
@@ -386,19 +377,45 @@ function sharePage() {
 }
 
 //====================================
-// عداد الدعوات (الجديد)
+// عداد الدعوات مع تغيير النص
 //====================================
 let prayers = localStorage.getItem("prayersCount") || 0;
 document.getElementById("prayersCount").innerHTML = prayers;
+
+// قائمة الأدعية القصيرة للزر (تم زيادتها)
+const shortPrayers = [
+    "اللهم ارحمها 🤍",
+    "اللهم اغفر لها ✨",
+    "اللهم نوّر قبرها 🕊️",
+    "اللهم آنس وحشتها 🤍",
+    "اللهم أبدلها داراً خيراً ✨",
+    "اللهم ارزقها الفردوس 🕊️",
+    "اللهم اجعل قبرها روضة 🌿",
+    "اللهم تجاوز عن سيئاتها ✨",
+    "اللهم أسكنها الفردوس الأعلى 🕌",
+    "اللهم بيّض وجهها 🤍",
+    "اللهم نقّها من الذنوب 💧",
+    "اللهم ثبتها عند السؤال 🕊️",
+    "اللهم ظلها بظلك ☁️",
+    "اللهم حرّم جسدها على النار 🌿",
+    "اللهم شفّع فيها نبيك ✨",
+    "اللهم ارحم ضعفها 🤍"
+];
+
+// ضبط النص الأولي للزر
+document.getElementById("prayerBtn").innerHTML = shortPrayers[prayers % shortPrayers.length];
 
 function sendPrayer(){
     prayers++;
     document.getElementById("prayersCount").innerHTML = prayers;
     localStorage.setItem("prayersCount", prayers);
     
-    // تأثير الحمامة البيضاء
+    // تغيير نص الزر ليعرض دعاء مختلف
+    document.getElementById("prayerBtn").innerHTML = shortPrayers[prayers % shortPrayers.length];
+    
+    // تأثير الحمامة والقلب
     let dove = document.createElement("div");
-    dove.innerHTML = "🕊️";
+    dove.innerHTML = (Math.random() > 0.5) ? "🕊️" : "🤍";
     dove.style.position = "absolute";
     dove.style.left = (40 + Math.random() * 20) + "%";
     dove.style.bottom = "20px";
@@ -411,7 +428,8 @@ function sendPrayer(){
     
     setTimeout(() => {
         dove.style.opacity = "0";
-        dove.style.transform = `translateY(-150px) scale(1.5)`;
+        let rotation = (Math.random() - 0.5) * 60;
+        dove.style.transform = `translateY(-150px) scale(1.5) rotate(${rotation}deg)`;
     }, 50);
 
     setTimeout(() => {
@@ -420,7 +438,7 @@ function sendPrayer(){
 }
 
 //====================================
-// السبحة الإلكترونية وتأثير حبات السبحة
+// السبحة الإلكترونية
 //====================================
 let count = localStorage.getItem("tasbeehCount") || 0;
 document.getElementById("tasbeehCount").innerHTML = count;
