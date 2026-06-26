@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <title>صدقة جارية | هدى عبدالله علي محفوظ</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
@@ -283,21 +287,19 @@ footer{
     <b>هدى عبدالله علي محفوظ</b>
     <br><br>
     
-    <!-- العداد الجديد الذكي -->
     <div style="margin-top: 30px; margin-bottom: 20px;">
-        <p style="font-size: 18px; color: #ddd; margin-bottom: 10px;">عدد الأشخاص الذين زاروا الصفحة:</p>
-        <img id="visitorBadge" alt="عداد الزوار" style="border-radius: 5px;">
-        
-        <!-- كود يجبر العداد على التحديث اللحظي وعدم حفظ الرقم القديم -->
-        <script>
-            document.getElementById("visitorBadge").src = "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=sadaqah-hoda-mahfouz-2026&count_bg=%23D4AF37&title_bg=%23111111&title=%D8%B2%D8%A7%D8%A6%D8%B1&edge_flat=true&nocache=" + new Date().getTime();
-        </script>
+        <p style="font-size: 18px; color: #ddd; margin-bottom: 10px;">عدد الزيارات للصفحة:</p>
+        <img id="liveVisitorCounter" alt="عداد الزيارات" style="border-radius: 5px; height: 30px;">
     </div>
 
     10 يناير 2026
 </footer>
 
 <script>
+// كود تشغيل العداد الجديد وتخطي الكاش
+let uniqueTime = new Date().getTime(); // بيجيب الوقت بالثانية عشان اللينك يتغير كل مرة
+document.getElementById("liveVisitorCounter").src = "https://profile-counter.glitch.me/sadaqah-hoda-mahfouz-live/count.svg?nocache=" + uniqueTime;
+
 //============================
 // رسالة البداية 
 //============================
